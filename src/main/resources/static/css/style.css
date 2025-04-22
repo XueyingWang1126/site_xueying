@@ -1,0 +1,420 @@
+/* ========== 基准 & 主题变量 ========== */
+html {
+    font-size: 22px;
+}
+:root {
+    --watermark-color: rgba(255,255,255,0.10);
+    --photo-shadow: 0 0 1rem rgba(255,255,255,0.6);
+    --dot-color: rgba(255,255,255,0.6);
+    --bg: #000;
+    --text: #eee;
+    --subtext: #ccc;
+    --muted: #888;
+    --border: #444;
+    --card-hover: #111;
+    --pill-bg: #fff;
+    --pill-text: #000;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg);
+    color: var(--text);
+}
+body.light {
+    --watermark-color: rgba(0,0,0,0.10);
+    --photo-shadow: 0 0 1rem rgba(0,0,0,0.6);
+    --dot-color: rgba(0,0,0,0.6);
+    --bg: #fafafa;
+    --text: #333;
+    --subtext: #666;
+    --muted: #888;
+    --border: #ddd;
+    --card-hover: #f5f5f5;
+    --pill-bg: #f0f0f0;
+    --pill-text: #333;
+}
+body.light .expand-btn {
+    border-color: var(--pill-text);
+    color: var(--pill-text);
+}
+/* 2) Canvas 全屏固定，真实内容置顶 */
+#bg-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+/* 确保页面内容都在 Canvas 之上 */
+.container,
+#hero, section, footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* ========== 可访问焦点 ========== */
+a:focus,
+button:focus {
+    outline: 2px dashed var(--pill-text);
+    outline-offset: 2px;
+}
+
+/* ===== 新增：Hero 中的 Resume ===== */
+.hero__resume-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width:2.5rem;
+    height: 2.5rem;
+    background-color: var(--pill-bg);
+    color: var(--pill-text);
+    border-radius: 50%;
+    font-size: 3rem;     /* 大小接近太阳按钮 */
+    text-decoration: none;
+    transition: background-color 0.2s;
+    margin-bottom: 1rem;    /* 与 subtitle 保持 一定 间距 */
+}
+.hero__resume-link:hover,
+.hero__resume-link:focus {
+    background-color: var(--card-hover);
+    outline: none;
+}
+.hero__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem; /* 保持和 subtitle 的间距 */
+}
+
+/* 通用 action-btn 样式 */
+.action-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--pill-bg);
+    color: var(--pill-text);
+    border-radius: 50%;
+    font-size: 1.25rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+.action-btn:hover,
+.action-btn:focus {
+    background-color: var(--card-hover);
+    outline: none;
+}
+
+/* Email 包装器，不是链接所以用 div */
+.email-wrapper {
+    position: relative;
+}
+
+/* Tooltip 初始隐藏 */
+.email-tooltip {
+    position: absolute;
+    top: calc(100% + 0.25rem); /* 按钮下方 */
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* 悬停或聚焦时显示 Tooltip */
+.email-wrapper:hover .email-tooltip,
+.email-wrapper:focus-within .email-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.email-wrapper.copied::after {
+    content: "Copied!";
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+
+/* ========== 主题切换按钮 ========== */
+#theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text);
+    z-index: 1000;
+}
+
+/* ========== 通用容器 & 标题 ========== */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 1rem; /* 收紧上下间距 */
+}
+h2 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem; /* 收紧模块顶部间距 */
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.3rem;
+}
+
+/* ========== 链接样式 ========== */
+a {
+    color: var(--text);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* ========== Hero ========== */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0; /* 上下内边留白 */
+}
+.hero__photo img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--photo-shadow);
+    transform: translate(-1rem, 1rem);
+}
+.hero__text h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem; /* 调整与下方文字距离 */
+}
+.hero__subtitle {
+    font-size: 1rem;
+    color: var(--subtext);
+    margin-bottom: 1rem;
+}
+.hero__intro {
+    font-size: 1rem;
+    margin-bottom: 1rem; /* 收紧与 About 的距离 */
+    color: var(--text);
+}
+#about-content.collapsed {
+    max-height: 9.5rem; /* 大约两行文字的高度，你可根据需要调整 */
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+#about-content.expanded {
+    max-height: 1000px; /* 足够显示所有内容 */
+    transition: max-height 0.5s ease;
+}
+
+.expand-btn {
+    background: none;
+    border: none;  /* 默认文本色为浅色 */
+    color: var(--text);
+    cursor: pointer;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+}
+
+/* ========== Experience & Education 卡片 ========== */
+.experience__card,
+.education__card {
+    display: block;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+.experience__card:hover,
+.education__card:hover {
+    background-color: var(--card-hover);
+}
+.card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.company-wrapper {
+    display: flex;
+    align-items: center;
+}
+.company-icon {
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+}
+.company-info {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.card__period {
+    font-size: 0.9rem;
+    color: var(--subtext);
+}
+.link-arrow {
+    display: inline-block;
+    margin-left: 0.3rem;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s, transform 0.2s;
+    color: var(--muted);
+}
+.experience__card:hover .link-arrow,
+.education__card:hover .link-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+.card__role {
+    font-style: italic;
+    color: var(--subtext);
+    margin: 0.3rem 0 0.5rem;
+}
+.card__bullets {
+    list-style: none;
+    padding-left: 1.5rem;
+    margin: 0;
+}
+.card__bullets li {
+    position: relative;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+}
+.card__bullets li::before {
+    content: '•';
+    position: absolute;
+    left: -1.2rem;
+    color: var(--muted);
+}
+.education-info {
+    font-size: 0.9rem;
+    color: var(--subtext);
+    margin-top: 0.25rem;
+}
+.education__card:last-child {
+    border-bottom: none;
+}
+
+/* ========== Skills ========== */
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+.skill {
+    display: inline-block;
+    background-color: var(--pill-bg);
+    color: var(--pill-text);
+    padding: 0.5rem 1rem; /* 略微加大触控区域 */
+    border-radius: 9999px;
+    font-size: 0.875rem;
+}
+
+/* ========== Footer ========== */
+.footer {
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+    color: var(--subtext);
+}
+
+/* ========== 响应式 Hero 重排 ========== */
+@media (max-width: 640px) {
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 1.5rem 0;
+    }
+    .hero__photo {
+        margin-top: 1rem;
+    }
+}
+body {
+    position: relative;      /* 让伪元素定位相对于 body */
+    overflow-x: hidden;      /* 防止水平滚动条出现 */
+}
+
+/* 水印文字 */
+body::before {
+    content: "XUEYING WANG";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10rem;
+    font-weight: bold;
+    color: var(--watermark-color);
+    white-space: nowrap;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 确保页面内容在它之上 */
+.container,
+#hero,
+section,
+.footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* ====== Email Tooltip on Hover ====== */
+.email-wrapper::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+.email-wrapper:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
