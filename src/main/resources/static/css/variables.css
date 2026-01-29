@@ -1,0 +1,36 @@
+/*
+ * Purpose:
+ * Design tokens and theme variables for light/dark mode.
+ * Used in: Global across all pages and components.
+ */
+:root {
+    --photo-shadow: 0 0 1rem rgba(0,0,0,0.35);
+    --dot-color: rgba(255,255,255,0.25);
+    --cursor-glow: rgba(194, 123, 147, 0.28);
+    --bg: #17121a;
+    --text: #e6f0ff;
+    --subtext: #b6c3d8;
+    --muted: #8a97ab;
+    --border: #1f2a3a;
+    --card-hover: #101a2a;
+    --pill-bg: #1d2130;
+    --pill-text: #c27b93;
+    --accent: #c27b93;
+    --accent-deep: #a55d75;
+}
+
+body.light {
+    --photo-shadow: 0 0 1rem rgba(0,0,0,0.2);
+    --dot-color: rgba(0,0,0,0.2);
+    --cursor-glow: rgba(194, 123, 147, 0.22);
+    --bg: #f8f3f6;
+    --text: #1c2433;
+    --subtext: #5b677b;
+    --muted: #7c8799;
+    --border: #dbe3ee;
+    --card-hover: #e7eef8;
+    --pill-bg: #eef3f9;
+    --pill-text: #c27b93;
+    --accent: #c27b93;
+    --accent-deep: #a55d75;
+}

@@ -1,0 +1,11 @@
+/*
+ * Purpose:
+ * Contact section layout and text.
+ * Used in: Contact section.
+ */
+.contact {
+    text-align: center;
+}
+.contact p {
+    color: var(--subtext);
+}

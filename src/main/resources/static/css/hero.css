@@ -1,0 +1,51 @@
+/*
+ * Purpose:
+ * Hero section layout and typography.
+ * Used in: Home page hero section.
+ */
+.hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 3rem 0;
+}
+.hero__kicker {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.08rem;
+    text-transform: uppercase;
+}
+.hero__headline {
+    font-size: clamp(2.4rem, 6vw, 3.5rem);
+    line-height: 1.1;
+    margin: 0.4rem 0 0.6rem;
+}
+.hero__photo img {
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--photo-shadow);
+    transform: translate(-1rem, 1rem);
+}
+.hero__subtitle {
+    color: var(--subtext);
+    margin-bottom: 0.5rem;
+}
+.hero__intro {
+    max-width: 38rem;
+    color: var(--subtext);
+}
+.hero__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.hero__cta {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}

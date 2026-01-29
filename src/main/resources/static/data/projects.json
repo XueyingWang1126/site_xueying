@@ -1,0 +1,97 @@
+[
+  {
+    "id": "javainsight",
+    "title": "JavaInsight",
+    "tagline": "Developer tool that turns Java codebases into actionable insights.",
+    "stack": ["Java", "Spring Boot", "MySQL", "REST APIs"],
+    "tags": ["Code Analysis", "Backend", "API"],
+    "role": "Backend Developer",
+    "highlights": [
+      "Built parsing workflows to surface dependencies and hotspots",
+      "Designed API endpoints for analytics retrieval"
+    ],
+    "links": {
+      "github": "#"
+    },
+    "metrics": {
+      "focus": "Maintainability"
+    },
+    "featured": true
+  },
+  {
+    "id": "service-dashboard",
+    "title": "Service Ops Dashboard",
+    "tagline": "Monitoring view that highlights key service health signals.",
+    "stack": ["React", "Node.js", "Postman"],
+    "tags": ["Frontend", "Observability"],
+    "role": "Full Stack Contributor",
+    "highlights": [
+      "Designed layout for fast status scanning",
+      "Connected API summaries into a single view"
+    ],
+    "links": {
+      "github": "#"
+    },
+    "metrics": {
+      "focus": "Clarity"
+    },
+    "featured": true
+  },
+  {
+    "id": "client-platform",
+    "title": "Client Service Platform (Backend)",
+    "tagline": "Reusable API modules and secure login flows for a support platform.",
+    "stack": ["Java", "Redis", "MySQL", "Postman"],
+    "tags": ["Backend", "Security", "APIs"],
+    "role": "Backend Intern",
+    "highlights": [
+      "Implemented authentication workflows",
+      "Optimized data access for core services"
+    ],
+    "links": {
+      "github": "#"
+    },
+    "metrics": {
+      "focus": "Reliability"
+    },
+    "featured": false
+  },
+  {
+    "id": "ai-marketplace-cart",
+    "title": "AI Model Marketplace Cart",
+    "tagline": "Data model and backend logic for multiple product types.",
+    "stack": ["MySQL", "Backend Logic", "API Testing", "Collaboration"],
+    "tags": ["Data Modeling", "Backend"],
+    "role": "Backend Contributor",
+    "highlights": [
+      "Defined cart schema for different product types",
+      "Validated workflows with API tests"
+    ],
+    "links": {
+      "github": "#"
+    },
+    "metrics": {
+      "focus": "Scalability"
+    },
+    "featured": false
+  },
+  {
+    "id": "qa-automation-kit",
+    "title": "QA Automation Toolkit",
+    "tagline": "Reusable scripts for API verification and regression checks.",
+    "stack": ["Java", "JUnit", "Postman"],
+    "tags": ["Testing", "Automation"],
+    "role": "QA Contributor",
+    "highlights": [
+      "Standardized API test flows",
+      "Improved coverage with reusable helpers"
+    ],
+    "links": {
+      "github": "#"
+    },
+    "metrics": {
+      "focus": "Reliability"
+    },
+    "featured": false
+  }
+]

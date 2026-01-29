@@ -1,25 +1,56 @@
+<!--
+  Purpose: Main portfolio page layout and sections.
+  Module responsibilities: Navigation, section structure, and content.
+-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title th:text="${name} ?: 'Xueying Wang'">Xueying Wang</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css"/>
-    <script th:src="@{/js/main.js}" src="/js/main.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/style.css?v=202601272300}" href="/css/style.css?v=202601272300"/>
+    <script th:src="@{/js/main.js?v=202601272300}" src="/js/main.js?v=202601272300" defer></script>
 </head>
 <body>
+<!-- Splash Overlay -->
+<div class="splash-overlay" role="dialog" aria-label="Splash screen">
+    <button class="splash-skip" type="button">Skip</button>
+    <div class="splash-brand" aria-hidden="true">
+        <div class="splash-message">
+            <span class="typing">Welcome to my website</span>
+        </div>
+        <div class="splash-character">
+            <img class="intro-avatar splash-avatar-img"
+                 th:src="@{/images/intro-avatar.png}"
+                 src="/images/intro-avatar.png"
+                 alt="Intro character"
+                 loading="eager"/>
+        </div>
+    </div>
+</div>
+
 <!-- 背景动画 Canvas -->
 <canvas id="bg-canvas"></canvas>
 
-<!-- 主题切换按钮 -->
-<button id="theme-toggle" aria-label="Toggle theme">☀️</button>
+<!-- Top Nav -->
+<nav class="top-nav" aria-label="Primary">
+    <a href="#hero" class="nav-logo">XW</a>
+    <div class="nav-links">
+        <a href="#about">Profile</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Connect</a>
+    </div>
+    <div class="nav-actions">
+        <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
+    </div>
+</nav>
 
 <!-- Hero -->
 <section id="hero" class="hero container">
     <div class="hero__text">
-        <h1>
-            Hi there, I'm <span th:text="${name} ?: 'Xueying Wang'">Xueying Wang</span>
-        </h1>
+        <p class="hero__kicker">Hi, my name is <span th:text="${name} ?: 'Xueying Wang'">Xueying Wang</span>.</p>
+        <h1 class="hero__headline">I build software and enjoy learning along the way.</h1>
 
         <div class="hero__actions">
             <!-- resume-link -->
@@ -41,10 +72,14 @@
 
         </div>
 
-        <p class="hero__subtitle" th:text="${title}">Graduate Software Developer</p>
+        <p class="hero__subtitle" th:text="${title}">MSc Software Development graduate.</p>
         <p class="hero__intro" th:text="${summary}">
-            Graduate software developer proficient in Java 1.8, Spring Boot, RESTful APIs, and MySQL.
+            Focused on Java/Spring and full‑stack tools, including projects like JavaInsight.
         </p>
+        <div class="hero__cta">
+            <a class="cta-btn primary" href="#projects">View Projects</a>
+            <a class="cta-btn ghost" href="#contact">Contact</a>
+        </div>
     </div>
     <div class="hero__photo">
         <img th:src="@{/images/avatar.jpg}"
@@ -55,26 +90,170 @@
 
 <!-- About me -->
 <section id="about" class="about container" aria-labelledby="about-title">
-    <h2 id="about-title">About me</h2>
-    <div id="about-content" class="collapsed">
-        <p>👩‍💻 Hi! I'm Xueying, currently pursuing my Master's in Software Development at the University of Glasgow.</p>
-
-        <p> During my internship at China Telecom as an Assistant Software Engineer, I sharpened my backend and frontend
-            skills by working on projects involving API development, secure login systems, database structuring, and UI
-            enhancement.</p>
-
-        <p>At the university, I've developed several hands-on projects, including a multiplayer card game using Java and
-            an
-            event booking website built with Python, gaining valuable experience in collaborative development.</p>
-
-        <p>I'll regularly update my homepage with more exciting projects and tech explorations—stay tuned!😀</p>
+    <h2 id="about-title">About</h2>
+    <div id="about-content">
+        <p>Hi, I’m Xueying, a graduate software developer based in the UK and a recent MSc Software Development graduate from the University of Glasgow.</p>
+        <p>I build software through internships and team projects, and I enjoy collaborating on real problems where clean architecture and thoughtful APIs matter. I aim for clarity, reliability, and maintainability in everything I ship.</p>
+        <p>I also like staying connected to the local tech community and often join Glasgow meetups to learn about industry trends and exchange ideas with people in the field.</p>
+        <p>Outside of coding, I enjoy photography, challenging jigsaw puzzles, hiking, singing, and exploring good food. These interests keep me grounded and influence how I approach problem solving.</p>
+        <p>I’m early in my career and always open to in person conversations, learning from others, and building thoughtful software together.</p>
     </div>
-    <button id="toggle-btn" class="expand-btn">▼ Read More</button>
 </section>
+
+<!-- Recent Technologies -->
+<section id="tech" class="tech container" aria-labelledby="tech-title">
+    <h2 id="tech-title">Recent Technologies</h2>
+    <div class="tech-grid">
+        <span>Java</span>
+        <span>Spring Boot</span>
+        <span>JavaFX</span>
+        <span>React</span>
+        <span>Node.js</span>
+        <span>MySQL</span>
+        <span>Redis</span>
+        <span>Docker</span>
+        <span>Git</span>
+        <span>JUnit</span>
+    </div>
+</section>
+
+<!-- Featured Projects -->
+<section id="projects" class="projects container" aria-labelledby="projects-title">
+    <h2 id="projects-title">Featured Work</h2>
+    <div class="project-cards" id="featured-projects" data-source="/data/projects.json">
+        <article class="project-card">
+            <a class="card-link" href="#" aria-label="JavaInsight project page"></a>
+            <a class="project-media project-link" href="#" aria-label="JavaInsight preview"></a>
+            <div class="project-body">
+                <h3><a class="project-title-link" href="#">JavaInsight</a></h3>
+                <p>Developer tool for analyzing Java codebases and surfacing actionable insights.</p>
+                <div class="project-tags">
+                    <span>Java</span><span>Spring</span><span>MySQL</span>
+                </div>
+                <div class="project-links">
+                    <a class="icon-link" href="#" aria-label="JavaInsight GitHub">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+        <article class="project-card">
+            <a class="card-link" href="#" aria-label="Project Beta project page"></a>
+            <a class="project-media project-link" href="#" aria-label="Project Beta preview"></a>
+            <div class="project-body">
+                <h3><a class="project-title-link" href="#">Project Beta</a></h3>
+                <p>Placeholder for a full‑stack web app with authentication and analytics.</p>
+                <div class="project-tags">
+                    <span>Python</span><span>Django</span><span>Redis</span>
+                </div>
+                <div class="project-links">
+                    <a class="icon-link" href="#" aria-label="Project Beta GitHub">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+        <article class="project-card">
+            <a class="card-link" href="#" aria-label="Project Gamma project page"></a>
+            <a class="project-media project-link" href="#" aria-label="Project Gamma preview"></a>
+            <div class="project-body">
+                <h3><a class="project-title-link" href="#">Project Gamma</a></h3>
+                <p>Placeholder for a UI/UX focused web tool with performance optimizations.</p>
+                <div class="project-tags">
+                    <span>JavaScript</span><span>React</span><span>Docker</span>
+                </div>
+                <div class="project-links">
+                    <a class="icon-link" href="#" aria-label="Project Gamma GitHub">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- Work / Projects -->
+<section id="projects" class="work container" aria-labelledby="work-title">
+    <h2 id="work-title">Projects</h2>
+    <div class="work-grid" id="work-projects" data-source="/data/projects.json">
+        <article class="work-card">
+            <a class="card-link" href="#" aria-label="JavaInsight project page"></a>
+            <a class="work-media project-link" href="#" aria-label="JavaInsight details"></a>
+            <div class="work-header">
+                <h3 class="work-title"><a class="project-title-link" href="#">JavaInsight</a></h3>
+                <p class="work-desc">A developer tool that turns Java codebases into clear, actionable insights.</p>
+            </div>
+            <div class="work-tags">
+                <span class="work-tag">Java</span>
+                <span class="work-tag">Spring Boot</span>
+                <span class="work-tag">MySQL</span>
+                <span class="work-tag">REST APIs</span>
+            </div>
+            <div class="work-actions">
+                <a class="work-btn icon-link" href="#" aria-label="JavaInsight GitHub">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
+                    </svg>
+                </a>
+            </div>
+        </article>
+
+        <article class="work-card">
+            <a class="card-link" href="#" aria-label="Client Service Platform project page"></a>
+            <a class="work-media project-link" href="#" aria-label="Client Service Platform details"></a>
+            <div class="work-header">
+                <h3 class="work-title"><a class="project-title-link" href="#">Client Service Platform (Backend)</a></h3>
+                <p class="work-desc">Built reusable API modules and secure login flows for a support platform.</p>
+            </div>
+            <div class="work-tags">
+                <span class="work-tag">Java</span>
+                <span class="work-tag">Redis</span>
+                <span class="work-tag">MySQL</span>
+                <span class="work-tag">Postman</span>
+            </div>
+            <div class="work-actions">
+                <a class="work-btn icon-link" href="#" aria-label="Client Service Platform GitHub">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
+                    </svg>
+                </a>
+            </div>
+        </article>
+
+        <article class="work-card">
+            <a class="card-link" href="#" aria-label="AI Model Marketplace Cart project page"></a>
+            <a class="work-media project-link" href="#" aria-label="AI Model Marketplace Cart details"></a>
+            <div class="work-header">
+                <h3 class="work-title"><a class="project-title-link" href="#">AI Model Marketplace Cart</a></h3>
+                <p class="work-desc">Designed cart data model and backend logic for multiple product types.</p>
+            </div>
+            <div class="work-tags">
+                <span class="work-tag">MySQL</span>
+                <span class="work-tag">Backend Logic</span>
+                <span class="work-tag">API Testing</span>
+                <span class="work-tag">Collaboration</span>
+            </div>
+            <div class="work-actions">
+                <a class="work-btn icon-link" href="#" aria-label="AI Model Marketplace Cart GitHub">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
+                    </svg>
+                </a>
+            </div>
+        </article>
+    </div>
+</section>
+
 
 <!-- Work Experience -->
 <section id="experience" class="experience container" aria-labelledby="exp-title">
-    <h2 id="exp-title">Work Experience</h2>
+    <h2 id="exp-title">Experience</h2>
     <a
             href="https://www.chinatelecom-h.com/en/global/home.php"
             class="experience__card"
@@ -101,6 +280,31 @@
             <li>Developed backend services in Spring Boot</li>
             <li>Designed and optimized MySQL databases</li>
             <li>Implemented RESTful APIs and integrated third‑party SDKs</li>
+        </ul>
+    </a>
+    <a
+            href="https://www.sainsburys.co.uk/"
+            class="experience__card"
+            target="_blank"
+            rel="noopener"
+    >
+        <div class="card__header">
+            <div class="company-wrapper">
+                <img
+                        th:src="@{/images/Sainsbury's logo.jpg}"
+                        src="/images/Sainsbury's logo.jpg"
+                        alt="Sainsbury's Logo"
+                        class="company-icon"
+                />
+                <span class="company-info">Sainsbury’s</span>
+            </div>
+            <div class="card__period">Oct 2025 – Present</div>
+        </div>
+        <div class="card__role">Training Assistant</div>
+        <ul class="card__bullets">
+            <li>Completed structured and compliant training in a large and well regulated organization</li>
+            <li>Strengthened communication and problem understanding through customer focused scenarios</li>
+            <li>Maintained professionalism and teamwork while seeking a full time software role</li>
         </ul>
     </a>
 </section>
@@ -160,31 +364,12 @@
     </a>
 </section>
 
-<!-- Skills -->
-<section id="skills" class="skills container" aria-labelledby="skills-title">
-    <h2 id="skills-title">Skills</h2>
-    <div class="skills-list">
-        <span class="skill">Java</span>
-        <span class="skill">Python</span>
-        <span class="skill">JavaScript</span>
-        <span class="skill">Spring Boot</span>
-        <span class="skill">Maven</span>
-        <span class="skill">Django</span>
-        <span class="skill">Agile</span>
-        <span class="skill">MySQL</span>
-        <span class="skill">Git</span>
-    </div>
+<!-- Contact -->
+<section id="contact" class="contact container" aria-labelledby="contact-title">
+    <h2 id="contact-title">Contact</h2>
+    <p>I'm always open to conversations about projects, learning, and early-career opportunities.</p>
+    <button class="cta-btn primary contact-copy" type="button" data-email="xueyingwang1702@outlook.com">Say Hello</button>
 </section>
-
-<!-- Footer -->
-<footer class="footer container">
-    <p>
-        📫 Find me on
-        <a href="https://www.linkedin.com/in/xueyingwang01/" target="_blank"
-        >LinkedIn</a
-        >
-    </p>
-</footer>
 
 <!--<script>-->
 <!--    // 主题切换脚本-->

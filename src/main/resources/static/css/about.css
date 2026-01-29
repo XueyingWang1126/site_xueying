@@ -1,0 +1,12 @@
+/*
+ * Purpose:
+ * About section styles.
+ * Used in: About section on the home page.
+ */
+#about-content {
+    max-height: none;
+}
+.about p {
+    font-size: 1rem;
+    color: var(--subtext);
+}

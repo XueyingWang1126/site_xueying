@@ -1,0 +1,65 @@
+/*
+ * Purpose:
+ * Styles for the top navigation banner.
+ * Used in: Home page header (light & dark mode).
+ */
+.top-nav {
+    position: sticky;
+    top: 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0.9rem 1.2rem;
+    backdrop-filter: blur(8px);
+    background: var(--accent);
+    z-index: 900;
+    border-bottom: 1px solid var(--accent);
+}
+body.light .top-nav {
+    background: var(--accent);
+}
+body:not(.light) .top-nav {
+    color: #0b1220;
+}
+.nav-logo {
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.15rem;
+}
+body:not(.light) .nav-logo {
+    color: #0b1220;
+}
+.nav-links {
+    display: flex;
+    gap: 1.35rem;
+    align-items: center;
+    font-size: 1.05rem;
+    justify-content: center;
+}
+.nav-actions {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: flex-end;
+}
+.nav-links a {
+    color: var(--text);
+    text-decoration: none;
+}
+.nav-links a:hover {
+    color: var(--accent);
+}
+body:not(.light) .nav-links a {
+    color: #0b1220;
+}
+body:not(.light) .nav-links a:hover {
+    color: #0b1220;
+}
+body:not(.light) .nav-resume {
+    color: #0b1220;
+    border-color: #0b1220;
+}
+body:not(.light) #theme-toggle {
+    color: #0b1220;
+    border-color: #0b1220;
+}

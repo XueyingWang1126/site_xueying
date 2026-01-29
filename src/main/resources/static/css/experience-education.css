@@ -1,0 +1,85 @@
+/*
+ * Purpose:
+ * Experience and Education card styles.
+ * Used in: Experience and Education sections.
+ */
+.experience__card,
+.education__card {
+    display: block;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+.experience__card:hover,
+.education__card:hover {
+    background-color: color-mix(in srgb, var(--accent-deep), var(--bg) 84%);
+}
+.card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.company-wrapper {
+    display: flex;
+    align-items: center;
+}
+.company-icon {
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+}
+.company-info {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.card__period {
+    font-size: 0.9rem;
+    color: var(--subtext);
+}
+.link-arrow {
+    display: inline-block;
+    margin-left: 0.3rem;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s, transform 0.2s;
+    color: var(--muted);
+}
+.experience__card:hover .link-arrow,
+.education__card:hover .link-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+.card__role {
+    font-style: italic;
+    color: var(--subtext);
+    margin: 0.3rem 0 0.5rem;
+}
+.card__bullets {
+    list-style: none;
+    padding-left: 1.5rem;
+    margin: 0;
+}
+.card__bullets li {
+    position: relative;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+    font-size: 1.02rem;
+}
+.card__bullets li::before {
+    content: '•';
+    position: absolute;
+    left: -1.2rem;
+    color: var(--muted);
+}
+.education-info {
+    font-size: 1.05rem;
+    color: var(--subtext);
+    margin-top: 0.25rem;
+}
+.education__card:last-child {
+    border-bottom: none;
+}

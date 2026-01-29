@@ -1,0 +1,10 @@
+/*
+ * Purpose:
+ * Shared layout primitives like containers.
+ * Used in: All sections.
+ */
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+}

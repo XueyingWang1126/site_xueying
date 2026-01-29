@@ -1,0 +1,23 @@
+/*
+ * Purpose:
+ * Recent Technologies grid and tags.
+ * Used in: Recent Technologies section.
+ */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.6rem 1rem;
+    color: var(--subtext);
+}
+.tech-grid span {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid color-mix(in srgb, var(--accent), var(--border) 35%);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    font-size: 1rem;
+}
+body.light .tech-grid span {
+    background: #ffffff;
+    border-color: color-mix(in srgb, var(--accent), var(--border) 35%);
+    box-shadow: 0 6px 18px rgba(28, 36, 51, 0.08);
+}

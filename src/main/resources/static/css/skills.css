@@ -1,0 +1,19 @@
+/*
+ * Purpose:
+ * Skills list chips.
+ * Used in: Skills section.
+ */
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+.skill {
+    display: inline-block;
+    background-color: var(--pill-bg);
+    color: var(--pill-text);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+}

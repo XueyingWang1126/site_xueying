@@ -1,0 +1,15 @@
+/*
+ * Purpose:
+ * Shared section title styling.
+ * Used in: All main sections.
+ */
+h2 {
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    color: var(--accent);
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+}
