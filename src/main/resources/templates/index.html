@@ -1,4 +1,4 @@
-<!--
+﻿<!--
   Purpose: Main portfolio page layout and sections.
   Module responsibilities: Navigation, section structure, and content.
 -->
@@ -8,8 +8,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title th:text="${name} ?: 'Xueying Wang'">Xueying Wang</title>
-    <link rel="stylesheet" th:href="@{/css/style.css?v=202601272300}" href="/css/style.css?v=202601272300"/>
-    <script th:src="@{/js/main.js?v=202601272300}" src="/js/main.js?v=202601272300" defer></script>
+    <link rel="stylesheet" th:href="@{/css/style.css?v=202603031000}" href="/css/style.css?v=202603031000"/>
+    <script th:src="@{/js/main.js?v=202603031000}" src="/js/main.js?v=202603031000" defer></script>
 </head>
 <body>
 <!-- Splash Overlay -->
@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<!-- 背景动画 Canvas -->
+<!-- Background animation canvas -->
 <canvas id="bg-canvas"></canvas>
 
 <!-- Top Nav -->
@@ -49,7 +49,7 @@
 <!-- Hero -->
 <section id="hero" class="hero container">
     <div class="hero__text">
-        <p class="hero__kicker">Hi, my name is <span th:text="${name} ?: 'Xueying Wang'">Xueying Wang</span>.</p>
+        <p class="hero__kicker">Hi there, I'm <span th:text="${name} ?: 'Xueying Wang'">Xueying Wang</span>.</p>
         <h1 class="hero__headline">I build software and enjoy learning along the way.</h1>
 
         <div class="hero__actions">
@@ -59,7 +59,9 @@
                target="_blank"
                rel="noopener"
                aria-label="View my resume">
-                📄
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 2h7l5 5v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm6 1.5V8h4.5L13 3.5zM9 12h6v1.5H9V12zm0 3h6v1.5H9V15z"/>
+                </svg>
             </a>
 
             <!-- email-wrapper -->
@@ -67,19 +69,37 @@
                  data-email="xueyingwang1702@outlook.com"
                  data-tooltip="xueyingwang1702@outlook.com"
                  aria-label="Click to copy email">
-                ✉️
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6zm2 .5v.8l7 4.7 7-4.7v-.8H5zm14 2.6-6.6 4.4a1 1 0 0 1-1.1 0L5 9.1V18h14V9.1z"/>
+                </svg>
             </div>
+
+            <a href="https://www.linkedin.com/in/xueyingwang01/"
+               class="action-btn"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Open LinkedIn profile">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6.94 8.5H3.56V20h3.38V8.5zM5.25 7.03a1.96 1.96 0 1 0 0-3.92 1.96 1.96 0 0 0 0 3.92zM20.44 13.4c0-3.03-1.62-4.44-3.78-4.44-1.74 0-2.52.96-2.95 1.63V8.5h-3.38V20h3.38v-6.41c0-.34.02-.68.12-.92.27-.68.88-1.39 1.9-1.39 1.34 0 1.88 1.02 1.88 2.52V20h3.38v-6.6z"/>
+                </svg>
+            </a>
+
+            <a href="https://github.com/XueyingWang1126"
+               class="action-btn"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Open GitHub profile">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
+                </svg>
+            </a>
 
         </div>
 
         <p class="hero__subtitle" th:text="${title}">MSc Software Development graduate.</p>
         <p class="hero__intro" th:text="${summary}">
-            Focused on Java/Spring and full‑stack tools, including projects like JavaInsight.
+            Focused on Java and Spring full-stack tools, including projects like JavaInsight.
         </p>
-        <div class="hero__cta">
-            <a class="cta-btn primary" href="#projects">View Projects</a>
-            <a class="cta-btn ghost" href="#contact">Contact</a>
-        </div>
     </div>
     <div class="hero__photo">
         <img th:src="@{/images/avatar.jpg}"
@@ -90,166 +110,42 @@
 
 <!-- About me -->
 <section id="about" class="about container" aria-labelledby="about-title">
-    <h2 id="about-title">About</h2>
+    <h2 id="about-title">README.md</h2>
     <div id="about-content">
-        <p>Hi, I’m Xueying, a graduate software developer based in the UK and a recent MSc Software Development graduate from the University of Glasgow.</p>
-        <p>I build software through internships and team projects, and I enjoy collaborating on real problems where clean architecture and thoughtful APIs matter. I aim for clarity, reliability, and maintainability in everything I ship.</p>
-        <p>I also like staying connected to the local tech community and often join Glasgow meetups to learn about industry trends and exchange ideas with people in the field.</p>
-        <p>Outside of coding, I enjoy photography, challenging jigsaw puzzles, hiking, singing, and exploring good food. These interests keep me grounded and influence how I approach problem solving.</p>
-        <p>I’m early in my career and always open to in person conversations, learning from others, and building thoughtful software together.</p>
+        <p class="readme-heading"># Xueying Wang</p>
+        <p>Hello! I’m Xueying, a recent MSc Software Development graduate based in Glasgow.</p>
+        <p>I’m focused on growing as a junior software developer by building practical applications and strengthening my Java backend, API integration, and testing skills.</p>
+        <p class="readme-subheading">## What Shapes My Projects</p>
+        <p>My project ideas usually come from problems I have experienced directly. Job Application Tracker came from managing applications, CVs, and cover letters during my job search. JavaInsight came from student team projects, where similar helper methods could be written separately and become hard to maintain later.</p>
+        <p>I understand projects by asking who will use them, what workflow they support, how the data moves, where edge cases may appear, and whether another person can run the project without guessing.</p>
+        <p class="readme-subheading">## Outside the Code</p>
+        <p>Outside of coding, I like going to local tech meetups in Glasgow to learn from people in the field, and I enjoy short hikes around Scotland when I need time to reset.</p>
     </div>
 </section>
 
 <!-- Recent Technologies -->
 <section id="tech" class="tech container" aria-labelledby="tech-title">
-    <h2 id="tech-title">Recent Technologies</h2>
+    <h2 id="tech-title">Technical Toolkit</h2>
     <div class="tech-grid">
         <span>Java</span>
         <span>Spring Boot</span>
-        <span>JavaFX</span>
-        <span>React</span>
-        <span>Node.js</span>
+        <span>REST APIs</span>
         <span>MySQL</span>
+        <span>PostgreSQL</span>
         <span>Redis</span>
         <span>Docker</span>
         <span>Git</span>
         <span>JUnit</span>
+        <span>Postman</span>
     </div>
 </section>
 
-<!-- Featured Projects -->
-<section id="projects" class="projects container" aria-labelledby="projects-title">
-    <h2 id="projects-title">Featured Work</h2>
-    <div class="project-cards" id="featured-projects" data-source="/data/projects.json">
-        <article class="project-card">
-            <a class="card-link" href="#" aria-label="JavaInsight project page"></a>
-            <a class="project-media project-link" href="#" aria-label="JavaInsight preview"></a>
-            <div class="project-body">
-                <h3><a class="project-title-link" href="#">JavaInsight</a></h3>
-                <p>Developer tool for analyzing Java codebases and surfacing actionable insights.</p>
-                <div class="project-tags">
-                    <span>Java</span><span>Spring</span><span>MySQL</span>
-                </div>
-                <div class="project-links">
-                    <a class="icon-link" href="#" aria-label="JavaInsight GitHub">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </article>
-        <article class="project-card">
-            <a class="card-link" href="#" aria-label="Project Beta project page"></a>
-            <a class="project-media project-link" href="#" aria-label="Project Beta preview"></a>
-            <div class="project-body">
-                <h3><a class="project-title-link" href="#">Project Beta</a></h3>
-                <p>Placeholder for a full‑stack web app with authentication and analytics.</p>
-                <div class="project-tags">
-                    <span>Python</span><span>Django</span><span>Redis</span>
-                </div>
-                <div class="project-links">
-                    <a class="icon-link" href="#" aria-label="Project Beta GitHub">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </article>
-        <article class="project-card">
-            <a class="card-link" href="#" aria-label="Project Gamma project page"></a>
-            <a class="project-media project-link" href="#" aria-label="Project Gamma preview"></a>
-            <div class="project-body">
-                <h3><a class="project-title-link" href="#">Project Gamma</a></h3>
-                <p>Placeholder for a UI/UX focused web tool with performance optimizations.</p>
-                <div class="project-tags">
-                    <span>JavaScript</span><span>React</span><span>Docker</span>
-                </div>
-                <div class="project-links">
-                    <a class="icon-link" href="#" aria-label="Project Gamma GitHub">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </article>
-    </div>
-</section>
-
-<!-- Work / Projects -->
+<!-- Projects -->
 <section id="projects" class="work container" aria-labelledby="work-title">
     <h2 id="work-title">Projects</h2>
-    <div class="work-grid" id="work-projects" data-source="/data/projects.json">
-        <article class="work-card">
-            <a class="card-link" href="#" aria-label="JavaInsight project page"></a>
-            <a class="work-media project-link" href="#" aria-label="JavaInsight details"></a>
-            <div class="work-header">
-                <h3 class="work-title"><a class="project-title-link" href="#">JavaInsight</a></h3>
-                <p class="work-desc">A developer tool that turns Java codebases into clear, actionable insights.</p>
-            </div>
-            <div class="work-tags">
-                <span class="work-tag">Java</span>
-                <span class="work-tag">Spring Boot</span>
-                <span class="work-tag">MySQL</span>
-                <span class="work-tag">REST APIs</span>
-            </div>
-            <div class="work-actions">
-                <a class="work-btn icon-link" href="#" aria-label="JavaInsight GitHub">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
-                    </svg>
-                </a>
-            </div>
-        </article>
-
-        <article class="work-card">
-            <a class="card-link" href="#" aria-label="Client Service Platform project page"></a>
-            <a class="work-media project-link" href="#" aria-label="Client Service Platform details"></a>
-            <div class="work-header">
-                <h3 class="work-title"><a class="project-title-link" href="#">Client Service Platform (Backend)</a></h3>
-                <p class="work-desc">Built reusable API modules and secure login flows for a support platform.</p>
-            </div>
-            <div class="work-tags">
-                <span class="work-tag">Java</span>
-                <span class="work-tag">Redis</span>
-                <span class="work-tag">MySQL</span>
-                <span class="work-tag">Postman</span>
-            </div>
-            <div class="work-actions">
-                <a class="work-btn icon-link" href="#" aria-label="Client Service Platform GitHub">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
-                    </svg>
-                </a>
-            </div>
-        </article>
-
-        <article class="work-card">
-            <a class="card-link" href="#" aria-label="AI Model Marketplace Cart project page"></a>
-            <a class="work-media project-link" href="#" aria-label="AI Model Marketplace Cart details"></a>
-            <div class="work-header">
-                <h3 class="work-title"><a class="project-title-link" href="#">AI Model Marketplace Cart</a></h3>
-                <p class="work-desc">Designed cart data model and backend logic for multiple product types.</p>
-            </div>
-            <div class="work-tags">
-                <span class="work-tag">MySQL</span>
-                <span class="work-tag">Backend Logic</span>
-                <span class="work-tag">API Testing</span>
-                <span class="work-tag">Collaboration</span>
-            </div>
-            <div class="work-actions">
-                <a class="work-btn icon-link" href="#" aria-label="AI Model Marketplace Cart GitHub">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.52-1.12-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.64-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 7.07c.83 0 1.67.11 2.45.33 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.95-2.35 4.81-4.58 5.06.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
-                    </svg>
-                </a>
-            </div>
-        </article>
-    </div>
+    <!-- Project cards are rendered from /data/projects.json -->
+    <div class="work-grid" id="work-projects" data-source="/data/projects.json"></div>
 </section>
-
 
 <!-- Work Experience -->
 <section id="experience" class="experience container" aria-labelledby="exp-title">
@@ -271,15 +167,16 @@
                 <span class="company-info">China Telecom</span>
             </div>
             <div class="card__period">
-                July 2023 – August 2024
-                <span class="link-arrow">›</span>
+                July 2023 - August 2024
+                <span class="link-arrow">></span>
             </div>
         </div>
         <div class="card__role">Software Engineer</div>
         <ul class="card__bullets">
-            <li>Developed backend services in Spring Boot</li>
-            <li>Designed and optimized MySQL databases</li>
-            <li>Implemented RESTful APIs and integrated third‑party SDKs</li>
+            <li>Built Spring Boot backend features and supported API integration.</li>
+            <li>Designed MySQL tables for backend data requirements.</li>
+            <li>Used Postman, JUnit, and pre-release user testing to validate system behaviour.</li>
+            <li>Worked with frontend developers to troubleshoot integration issues.</li>
         </ul>
     </a>
     <a
@@ -296,15 +193,15 @@
                         alt="Sainsbury's Logo"
                         class="company-icon"
                 />
-                <span class="company-info">Sainsbury’s</span>
+                <span class="company-info">Sainsbury's</span>
             </div>
-            <div class="card__period">Oct 2025 – Present</div>
+            <div class="card__period">Oct 2025 - Present</div>
         </div>
         <div class="card__role">Training Assistant</div>
         <ul class="card__bullets">
-            <li>Completed structured and compliant training in a large and well regulated organization</li>
-            <li>Strengthened communication and problem understanding through customer focused scenarios</li>
-            <li>Maintained professionalism and teamwork while seeking a full time software role</li>
+            <li>Handled fast-paced customer tasks while judging priorities quickly.</li>
+            <li>Communicated clearly with customers and colleagues to resolve daily issues.</li>
+            <li>Adapted to changing rules and routines while staying calm and reliable.</li>
         </ul>
     </a>
 </section>
@@ -333,7 +230,7 @@
                         <div class="education-info">MSc Software Development</div>
                     </div>
                 </div>
-                <div class="card__period">2024 – 2025</div>
+                <div class="card__period">2024 - 2025</div>
             </div>
         </div>
     </a>
@@ -358,10 +255,136 @@
                         <div class="education-info">Bachelor of Science</div>
                     </div>
                 </div>
-                <div class="card__period">2019 – 2023</div>
+                <div class="card__period">2019 - 2023</div>
             </div>
         </div>
     </a>
+</section>
+
+<!-- Beyond the Code -->
+<section id="beyond" class="about container" aria-labelledby="beyond-title">
+    <h2 id="beyond-title">Beyond the Code</h2>
+    <div class="beyond-grid" id="beyond-cards">
+        <article class="beyond-card" tabindex="0" role="button" aria-expanded="false" aria-controls="beyond-detail-learn">
+            <div class="beyond-card-head">
+                <h3 class="beyond-card-title">When I learn something technical</h3>
+                <span class="beyond-card-cue" aria-hidden="true">⌄</span>
+            </div>
+            <div id="beyond-detail-learn" class="beyond-card-detail" hidden>
+                <div class="beyond-detail-grid">
+                    <section class="beyond-detail-block">
+                        <h4>Question I ask myself</h4>
+                        <ul>
+                            <li>What problem does this concept solve?</li>
+                            <li>Where would I use it in a real project?</li>
+                            <li>What is the smallest example I can run first?</li>
+                            <li>Which official document or reliable source should I check?</li>
+                            <li>How can I test it before putting it into the main project?</li>
+                            <li>Can I explain what works, what does not, and why?</li>
+                        </ul>
+                    </section>
+                    <section class="beyond-detail-block">
+                        <h4>What I do</h4>
+                        <p>I usually start from the problem and the use case. I want to know what the concept is for, where it appears in a project, and what kind of result I should expect.</p>
+                        <p>Then I check reliable sources and try a small example first. I prefer a simple version that I can run, test, and adjust before bringing it into the main project.</p>
+                        <p>When I apply it to a project, I keep the first version small. I check the result with sample inputs, test cases, console output, UI behaviour, or other evidence that fits the feature.</p>
+                        <p>I feel more confident with a technical concept when I can explain how I used it, what changed, what worked, and what I would improve next.</p>
+                    </section>
+                </div>
+            </div>
+        </article>
+
+        <article class="beyond-card" tabindex="0" role="button" aria-expanded="false" aria-controls="beyond-detail-ai">
+            <div class="beyond-card-head">
+                <h3 class="beyond-card-title">When I use AI tools</h3>
+                <span class="beyond-card-cue" aria-hidden="true">⌄</span>
+            </div>
+            <div id="beyond-detail-ai" class="beyond-card-detail" hidden>
+                <div class="beyond-detail-grid">
+                    <section class="beyond-detail-block">
+                        <h4>Question I ask myself</h4>
+                        <ul>
+                            <li>What am I trying to achieve with AI in this task?</li>
+                            <li>Do I understand the project structure before asking for changes?</li>
+                            <li>Is this a learning question, a coding task, a review task, or a debugging task?</li>
+                            <li>Have I given enough context, constraints, and examples?</li>
+                            <li>Which files, behaviours, or design choices should stay unchanged?</li>
+                            <li>How will I verify the result through running, testing, diff review, or manual checking?</li>
+                        </ul>
+                    </section>
+                    <section class="beyond-detail-block">
+                        <h4>What I do</h4>
+                        <p>I try to keep a positive and practical attitude toward AI tools. I use ChatGPT and Gemini more for learning, discussion, and shaping ideas, while I use Codex, Claude, and Cursor more for code review, project changes, and implementation support.</p>
+                        <p>For coding tasks, I do not start with a vague request. I first try to understand the project structure, the goal, and the parts that should not be changed. Then I write the prompt more like a small task brief, with context, constraints, expected output, and verification steps.</p>
+                        <p>I also keep learning how to use these tools better, especially from official guidance and structured courses. For example, I have looked into engineering-style prompting, AI agent skills, and Claude Code learning materials, because I want my use of AI to be more deliberate than just asking for quick answers.</p>
+                        <p>After the tool gives an answer, I still check the result through running the project, reviewing what changed, testing the behaviour, and deciding whether the change actually fits the project.</p>
+                    </section>
+                </div>
+            </div>
+        </article>
+
+        <article class="beyond-card" tabindex="0" role="button" aria-expanded="false" aria-controls="beyond-detail-team">
+            <div class="beyond-card-head">
+                <h3 class="beyond-card-title">When I work with others</h3>
+                <span class="beyond-card-cue" aria-hidden="true">⌄</span>
+            </div>
+            <div id="beyond-detail-team" class="beyond-card-detail" hidden>
+                <div class="beyond-detail-grid">
+                    <section class="beyond-detail-block">
+                        <h4>Question I ask myself</h4>
+                        <ul>
+                            <li>What is my part of the task?</li>
+                            <li>What result does the team need to finish?</li>
+                            <li>What is the current priority?</li>
+                            <li>Does my work depend on someone else?</li>
+                            <li>What have I tried if I get stuck?</li>
+                            <li>Who should I speak to if the issue affects the team plan?</li>
+                        </ul>
+                    </section>
+                    <section class="beyond-detail-block">
+                        <h4>What I do</h4>
+                        <p>When I work with others, I try to understand both my own task and the wider result the team needs to deliver. I pay attention to priorities, dependencies, and how my work connects with other people’s tasks.</p>
+                        <p>In university group projects, I often took an active role in keeping the work moving. I helped arrange meetings, split tasks, check progress, and make sure the final version could still be completed on time. When someone was blocked, I tried to discuss the problem early, adjust the plan where needed, and help the team move forward.</p>
+                        <p>If I get stuck, I try to understand the issue first before asking for help. I prefer to bring what I have tried, what I think may be wrong, and what options I can see, so the conversation can move toward a solution faster.</p>
+                        <p>My part-time work trained a different side of teamwork. In a busy store environment, I had to react quickly, communicate clearly with colleagues and customers, and adapt when tasks or rules changed during the day.</p>
+                    </section>
+                </div>
+            </div>
+        </article>
+
+        <article class="beyond-card" tabindex="0" role="button" aria-expanded="false" aria-controls="beyond-detail-feature">
+            <div class="beyond-card-head">
+                <h3 class="beyond-card-title">When I think about a feature</h3>
+                <span class="beyond-card-cue" aria-hidden="true">⌄</span>
+            </div>
+            <div id="beyond-detail-feature" class="beyond-card-detail" hidden>
+                <div class="beyond-detail-grid">
+                    <section class="beyond-detail-block">
+                        <h4>Question I ask myself</h4>
+                        <ul>
+                            <li>What real user scenario is this feature trying to support?</li>
+                            <li>From the user side, what is the most natural path?</li>
+                            <li>From the developer side, how should the data, state, and rules be handled?</li>
+                            <li>From the tester side, where is the feature most likely to break?</li>
+                            <li>Who is allowed to use this feature?</li>
+                            <li>Are there permission or eligibility limits?</li>
+                            <li>Can one user repeat the action?</li>
+                            <li>What happens when the limit is reached?</li>
+                            <li>What should the system do if the input is invalid or the state changes suddenly?</li>
+                            <li>Am I only implementing the happy path?</li>
+                        </ul>
+                    </section>
+                    <section class="beyond-detail-block">
+                        <h4>What I do</h4>
+                        <p>When I think about a feature, I usually start with inside-out thinking. I look at it from three sides, user, developer, and tester.</p>
+                        <p>From the user side, I think about whether the feature feels natural to use, what the core need is, and what may happen in a real situation. For example, with a shopping cart, I would not only think about how to add items. I would also think about what happens if a user adds items before logging in and then signs in later.</p>
+                        <p>From the developer side, I think about how the feature should be implemented, including the data, state, rules, and page behaviour behind it. From the tester side, I think about which parts of this specific feature are most important to check, based on how the feature is meant to work.</p>
+                        <p>This helps me think beyond the happy path and connect the feature with real user behaviour, implementation details, and testing focus.</p>
+                    </section>
+                </div>
+            </div>
+        </article>
+    </div>
 </section>
 
 <!-- Contact -->
@@ -371,14 +394,6 @@
     <button class="cta-btn primary contact-copy" type="button" data-email="xueyingwang1702@outlook.com">Say Hello</button>
 </section>
 
-<!--<script>-->
-<!--    // 主题切换脚本-->
-<!--    const btn = document.getElementById("theme-toggle"),-->
-<!--        body = document.body;-->
-<!--    btn.addEventListener("click", () => {-->
-<!--        body.classList.toggle("light");-->
-<!--        btn.textContent = body.classList.contains("light") ? "🌙" : "☀️";-->
-<!--    });-->
-<!--</script>-->
 </body>
 </html>
+

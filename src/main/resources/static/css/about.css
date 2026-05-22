@@ -10,3 +10,123 @@
     font-size: 1rem;
     color: var(--subtext);
 }
+.about .readme-heading,
+.about .readme-subheading {
+    color: var(--accent);
+    font-weight: 700;
+}
+.about .readme-heading {
+    margin-top: 0;
+}
+
+.beyond-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.95rem;
+    margin-top: 0.65rem;
+    align-items: start;
+}
+#beyond.is-expanded {
+    padding-bottom: min(52vh, 420px);
+}
+
+.beyond-card {
+    border: 1px solid color-mix(in srgb, var(--accent), var(--border) 45%);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.9rem 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: visible;
+    min-height: 3.7rem;
+    align-self: start;
+}
+
+.beyond-card:hover {
+    border-color: color-mix(in srgb, var(--accent), transparent 58%);
+}
+
+.beyond-card:focus-visible {
+    outline: 2px dashed var(--accent);
+    outline-offset: 3px;
+}
+
+body.light .beyond-card {
+    background: #ffffff;
+}
+
+.beyond-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem;
+}
+
+.beyond-card-title {
+    margin: 0;
+    font-size: 1.02rem;
+    color: var(--text);
+}
+
+.beyond-card-cue {
+    color: var(--accent);
+    font-size: 1rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.beyond-card[aria-expanded="true"] .beyond-card-cue {
+    transform: rotate(180deg);
+}
+
+.beyond-card-detail {
+    position: absolute;
+    top: calc(100% + 0.52rem);
+    left: 0;
+    width: min(760px, calc(200% + 0.95rem));
+    margin-top: 0;
+    padding: 0.82rem 0.92rem;
+    border: 1px solid color-mix(in srgb, var(--accent), var(--border) 45%);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--bg), black 10%);
+    box-shadow: 0 16px 30px rgba(8, 10, 16, 0.34);
+    z-index: 30;
+    max-height: none;
+    overflow: visible;
+}
+
+.beyond-card:nth-child(2n) .beyond-card-detail {
+    left: auto;
+    right: 0;
+}
+
+.beyond-detail-grid {
+    display: grid;
+    grid-template-columns: 0.95fr 1.15fr;
+    gap: 0.85rem;
+}
+
+.beyond-detail-block h4 {
+    margin: 0 0 0.45rem;
+    color: var(--accent);
+    font-size: 0.95rem;
+}
+
+.beyond-detail-block p {
+    margin: 0 0 0.5rem;
+    color: var(--subtext);
+    font-size: 0.92rem;
+}
+
+.beyond-detail-block ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--subtext);
+    font-size: 0.9rem;
+}
+
+.beyond-detail-block li {
+    margin: 0.18rem 0;
+}
+

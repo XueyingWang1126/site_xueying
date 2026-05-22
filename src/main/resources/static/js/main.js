@@ -1,17 +1,19 @@
-/*
+﻿/*
  * Purpose: Front-end behaviors and interactions.
  * Module responsibilities: Theme toggle, animations, data rendering, interactions.
  */
 
-// —— 主题切换 ——
+// Theme toggle
 const themeBtn = document.getElementById("theme-toggle"),
     bodyEl   = document.body;
-themeBtn.addEventListener("click", () => {
-    bodyEl.classList.toggle("light");
+if (themeBtn) {
     themeBtn.textContent = bodyEl.classList.contains("light") ? "🌙" : "☀️";
-});
+    themeBtn.addEventListener("click", () => {
+        bodyEl.classList.toggle("light");
+        themeBtn.textContent = bodyEl.classList.contains("light") ? "🌙" : "☀️";
+    });
+}
 
-// —— 背景点动画 ——
 // Canvas-based background dots animation.
 (function(){
     const canvas = document.getElementById('bg-canvas'),
@@ -56,7 +58,6 @@ themeBtn.addEventListener("click", () => {
     draw();
 })();
 
-//about me read more button
 // About section expand/collapse (if present).
 document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('toggle-btn');
@@ -68,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
         content.classList.toggle('expanded');
 
         toggleBtn.textContent = content.classList.contains('expanded')
-            ? '▲ Show Less'
-            : '▼ Read More';
+            ? 'Show Less'
+            : 'Read More';
     });
 });
 
@@ -80,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     emailWrapper.addEventListener('click', () => {
         const email = emailWrapper.getAttribute('data-email');
 
-        // 使用 Clipboard API
+        // Use Clipboard API
         navigator.clipboard.writeText(email).then(() => {
             emailWrapper.setAttribute('aria-label', 'Copied!');
             emailWrapper.classList.add('copied');
@@ -207,17 +208,66 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('mouseleave', onLeave);
 });
 
-// Projects data rendering
-// Fetches project data and injects cards.
+// Beyond section lightweight expandable cards.
 document.addEventListener('DOMContentLoaded', () => {
-    const featuredContainer = document.getElementById('featured-projects');
-    const workContainer = document.getElementById('work-projects');
-    if (!featuredContainer && !workContainer) return;
+    const beyondContainer = document.getElementById('beyond-cards');
+    if (!beyondContainer) return;
+    const beyondSection = document.getElementById('beyond');
 
-    const source =
-        (featuredContainer && featuredContainer.dataset.source) ||
-        (workContainer && workContainer.dataset.source) ||
-        '/data/projects.json';
+    const cards = Array.from(beyondContainer.querySelectorAll('.beyond-card'));
+    if (!cards.length) return;
+
+    const closeCard = (card) => {
+        card.setAttribute('aria-expanded', 'false');
+        const detailId = card.getAttribute('aria-controls');
+        if (!detailId) return;
+        const detailEl = document.getElementById(detailId);
+        if (detailEl) detailEl.hidden = true;
+        if (beyondSection) {
+            const hasOpenCard = cards.some((entry) => entry.getAttribute('aria-expanded') === 'true');
+            if (!hasOpenCard) beyondSection.classList.remove('is-expanded');
+        }
+    };
+
+    const openCard = (card) => {
+        cards.forEach((other) => {
+            if (other !== card) closeCard(other);
+        });
+        card.setAttribute('aria-expanded', 'true');
+        const detailId = card.getAttribute('aria-controls');
+        if (!detailId) return;
+        const detailEl = document.getElementById(detailId);
+        if (detailEl) detailEl.hidden = false;
+        if (beyondSection) beyondSection.classList.add('is-expanded');
+    };
+
+    const toggleCard = (card) => {
+        if (card.getAttribute('aria-expanded') === 'true') {
+            closeCard(card);
+            return;
+        }
+        openCard(card);
+    };
+
+    cards.forEach((card) => {
+        card.addEventListener('click', () => {
+            toggleCard(card);
+        });
+        card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleCard(card);
+            }
+        });
+    });
+});
+
+// Projects data rendering with expandable details.
+document.addEventListener('DOMContentLoaded', () => {
+    const workContainer = document.getElementById('work-projects');
+    if (!workContainer) return;
+
+    const source = workContainer.dataset.source || '/data/projects.json';
 
     const escapeHtml = (value) => {
         if (value === null || value === undefined) return '';
@@ -244,59 +294,470 @@ document.addEventListener('DOMContentLoaded', () => {
     const buildGithubLink = (links, label) => {
         const safe = links || {};
         const href = safe.github || '#';
-        return `<a class="icon-link" href="${escapeHtml(href)}" aria-label="${escapeHtml(label)}">${githubIcon}</a>`;
+        if (!href || href === '#') {
+            return `<span class="icon-link project-external-link is-placeholder" aria-label="${escapeHtml(label)} placeholder" title="GitHub link coming soon">${githubIcon}</span>`;
+        }
+        return `<a class="icon-link project-external-link" href="${escapeHtml(href)}" aria-label="${escapeHtml(label)}" target="_blank" rel="noopener">${githubIcon}</a>`;
     };
 
-    fetch(source)
+    const buildList = (items, className) => {
+        if (!Array.isArray(items) || !items.length) return '';
+        return `<ul class="${className}">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`;
+    };
+
+    const resolveDemoVideo = (project) => {
+        if (!project || typeof project !== 'object') return '';
+        if (project.media && typeof project.media.demoVideo === 'string' && project.media.demoVideo.trim()) {
+            return project.media.demoVideo.trim();
+        }
+        if (typeof project.demoVideo === 'string' && project.demoVideo.trim()) {
+            return project.demoVideo.trim();
+        }
+        if (project.details && typeof project.details.demoVideo === 'string' && project.details.demoVideo.trim()) {
+            return project.details.demoVideo.trim();
+        }
+        return '';
+    };
+
+    const buildCardMediaPreview = (project) => {
+        const demoVideoSrc = resolveDemoVideo(project);
+        if (!demoVideoSrc) {
+            return `
+                <div class="work-media-placeholder" aria-hidden="true">
+                    <span>Demo preview coming soon</span>
+                </div>
+            `;
+        }
+        return `
+            <button class="work-media-preview-btn" type="button" aria-label="${escapeHtml(project.title)} demo preview">
+                <video class="work-media-preview-video" autoplay muted loop playsinline preload="metadata">
+                    <source src="${escapeHtml(demoVideoSrc)}" type="video/mp4"/>
+                </video>
+            </button>
+        `;
+    };
+
+    const buildDiagrams = (diagrams, title) => {
+        if (!Array.isArray(diagrams) || !diagrams.length) return '';
+        return `
+            <div class="work-diagrams" aria-label="${escapeHtml(title)} diagrams">
+                ${diagrams.map((diagram) => {
+                    if (!diagram || !diagram.path) return '';
+                    const label = diagram.label || 'Diagram';
+                    return `
+                        <figure class="work-diagram-item">
+                            <figcaption>${escapeHtml(label)}</figcaption>
+                            <img src="${escapeHtml(diagram.path)}" alt="${escapeHtml(title)} ${escapeHtml(label)}" loading="lazy"/>
+                        </figure>
+                    `;
+                }).join('')}
+            </div>
+        `;
+    };
+
+    const findDiagramPath = (details, keyword) => {
+        const diagrams = details && Array.isArray(details.diagrams) ? details.diagrams : [];
+        const lowerKeyword = String(keyword || '').toLowerCase();
+        const target = diagrams.find((diagram) => {
+            const label = String(diagram && diagram.label || '').toLowerCase();
+            const path = String(diagram && diagram.path || '').toLowerCase();
+            return label.includes(lowerKeyword) || path.includes(lowerKeyword);
+        });
+        return target && target.path ? target.path : '';
+    };
+
+    const inferListClass = (title, section) => {
+        if (section && section.listClass) return section.listClass;
+        const lowerTitle = String(title || '').toLowerCase();
+        if (lowerTitle.includes('workflow')) return 'work-flow-list';
+        if (lowerTitle.includes('decision')) return 'work-decision-list';
+        return 'work-feature-list';
+    };
+
+    const buildCustomSection = (projectTitle, section) => {
+        if (!section || !section.title) return '';
+        const title = section.title;
+        const text = section.text ? `<p>${escapeHtml(section.text)}</p>` : '';
+        const listClass = inferListClass(title, section);
+        const list = Array.isArray(section.list) && section.list.length
+            ? buildList(section.list, listClass)
+            : '';
+        const diagramPath = section.diagramPath ? String(section.diagramPath).trim() : '';
+        const diagramClass = section.diagramClass ? ` ${escapeHtml(section.diagramClass)}` : '';
+        const diagramAlt = section.diagramAlt || `${projectTitle} ${title} diagram`;
+        const diagram = diagramPath
+            ? `<div class="work-diagram-frame"><img class="work-section-diagram${diagramClass} work-previewable" src="${escapeHtml(diagramPath)}" alt="${escapeHtml(diagramAlt)}" loading="lazy"/></div>`
+            : '';
+        return `<h4>${escapeHtml(title)}</h4>${diagram}${text}${list}`;
+    };
+
+    const buildDetails = (project, detailId) => {
+        const details = project && project.details ? project.details : {};
+        const customSections = Array.isArray(details.sections) ? details.sections : [];
+        if (customSections.length) {
+            return `
+                <div id="${escapeHtml(detailId)}" class="work-details" hidden>
+                    ${customSections.map((section) => buildCustomSection(project.title, section)).join('')}
+                </div>
+            `;
+        }
+        const hasDetailsContent = details.whyBuilt || details.architecture || details.database ||
+            (Array.isArray(details.coreWorkflow) && details.coreWorkflow.length) ||
+            (Array.isArray(details.keyFeatures) && details.keyFeatures.length) ||
+            (Array.isArray(details.engineeringDecisions) && details.engineeringDecisions.length) ||
+            (Array.isArray(details.diagrams) && details.diagrams.length);
+        if (!hasDetailsContent) return '';
+
+        const workflowDiagramPath = findDiagramPath(details, 'flow');
+        const architectureDiagramPath = findDiagramPath(details, 'architecture');
+        const databaseDiagramPath = findDiagramPath(details, 'database');
+
+        return `
+            <div id="${escapeHtml(detailId)}" class="work-details" hidden>
+                ${details.whyBuilt ? `<h4>Why I Built It</h4><p>${escapeHtml(details.whyBuilt)}</p>` : ''}
+                ${
+                    workflowDiagramPath
+                        ? `<h4>Workflow</h4><div class="work-diagram-frame"><img class="work-section-diagram diagram-workflow work-previewable" src="${escapeHtml(workflowDiagramPath)}" alt="${escapeHtml(project.title)} Workflow diagram" loading="lazy"/></div>`
+                        : (Array.isArray(details.coreWorkflow) && details.coreWorkflow.length ? `<h4>Workflow</h4>${buildList(details.coreWorkflow, 'work-flow-list')}` : '')
+                }
+                ${Array.isArray(details.keyFeatures) && details.keyFeatures.length ? `<h4>Key Features</h4>${buildList(details.keyFeatures, 'work-feature-list')}` : ''}
+                ${
+                    details.architecture || architectureDiagramPath
+                        ? `<h4>Architecture Design</h4>${architectureDiagramPath ? `<div class="work-diagram-frame"><img class="work-section-diagram diagram-architecture work-previewable" src="${escapeHtml(architectureDiagramPath)}" alt="${escapeHtml(project.title)} Architecture diagram" loading="lazy"/></div>` : ''}${details.architecture ? `<p>${escapeHtml(details.architecture)}</p>` : ''}`
+                        : ''
+                }
+                ${
+                    details.database || databaseDiagramPath
+                        ? `<h4>Database Design</h4>${databaseDiagramPath ? `<div class="work-diagram-frame"><img class="work-section-diagram diagram-database work-previewable" src="${escapeHtml(databaseDiagramPath)}" alt="${escapeHtml(project.title)} Database ER diagram" loading="lazy"/></div>` : ''}${details.database ? `<p>${escapeHtml(details.database)}</p>` : ''}`
+                        : ''
+                }
+                ${Array.isArray(details.engineeringDecisions) && details.engineeringDecisions.length ? `<h4>Engineering Decisions</h4>${buildList(details.engineeringDecisions, 'work-decision-list')}` : ''}
+            </div>
+        `;
+    };
+
+    const sanitizeSvgStyle = (styleValue) => {
+        if (!styleValue) return '';
+        return styleValue
+            .replace(/background-color\s*:[^;]+;?/gi, '')
+            .replace(/\s{2,}/g, ' ')
+            .trim();
+    };
+
+    const normalizeSvgImage = async (imageEl) => {
+        if (!imageEl) return;
+        if (imageEl.dataset.svgNormalized === 'true') return;
+        if (imageEl.dataset.svgNormalizing === 'true') {
+            return new Promise((resolve) => {
+                const timer = setInterval(() => {
+                    if (imageEl.dataset.svgNormalizing !== 'true') {
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, 60);
+            });
+        }
+        const src = imageEl.getAttribute('src') || '';
+        if (!src.toLowerCase().endsWith('.svg')) return;
+
+        imageEl.dataset.svgNormalizing = 'true';
+        try {
+            const response = await fetch(src);
+            if (!response.ok) throw new Error('Failed to fetch svg');
+            const svgText = await response.text();
+            const parser = new DOMParser();
+            const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+            const svgRoot = svgDoc.documentElement;
+            if (!svgRoot || svgRoot.nodeName.toLowerCase() !== 'svg') throw new Error('Invalid svg');
+
+            // Reset exported pan/zoom transform to avoid huge virtual canvas
+            // that makes real diagram content appear as tiny dots.
+            const viewportGroup = svgRoot.querySelector('.svg-pan-zoom_viewport');
+            if (viewportGroup) {
+                viewportGroup.removeAttribute('transform');
+                const viewportStyle = viewportGroup.getAttribute('style') || '';
+                const cleanedViewportStyle = viewportStyle
+                    .replace(/transform\s*:[^;]+;?/gi, '')
+                    .replace(/\s{2,}/g, ' ')
+                    .trim();
+                if (cleanedViewportStyle) {
+                    viewportGroup.setAttribute('style', cleanedViewportStyle);
+                } else {
+                    viewportGroup.removeAttribute('style');
+                }
+            }
+
+            const measurementHost = document.createElement('div');
+            measurementHost.style.position = 'fixed';
+            measurementHost.style.left = '-10000px';
+            measurementHost.style.top = '0';
+            measurementHost.style.visibility = 'hidden';
+            measurementHost.style.pointerEvents = 'none';
+
+            const measuredSvg = document.importNode(svgRoot, true);
+            measuredSvg.setAttribute('width', '2000');
+            measuredSvg.setAttribute('height', '2000');
+            measurementHost.appendChild(measuredSvg);
+            document.body.appendChild(measurementHost);
+
+            let bbox = null;
+            const bboxTarget = measuredSvg.querySelector('.svg-pan-zoom_viewport') || measuredSvg.querySelector('g') || measuredSvg;
+            if (bboxTarget && typeof bboxTarget.getBBox === 'function') {
+                bbox = bboxTarget.getBBox();
+            }
+            document.body.removeChild(measurementHost);
+
+            if (bbox && bbox.width > 0 && bbox.height > 0) {
+                svgRoot.setAttribute('viewBox', `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`);
+            }
+            svgRoot.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+            svgRoot.removeAttribute('width');
+            svgRoot.removeAttribute('height');
+            const cleanedStyle = sanitizeSvgStyle(svgRoot.getAttribute('style') || '');
+            if (cleanedStyle) {
+                svgRoot.setAttribute('style', cleanedStyle);
+            } else {
+                svgRoot.removeAttribute('style');
+            }
+
+            const serialized = new XMLSerializer().serializeToString(svgRoot);
+            const blob = new Blob([serialized], { type: 'image/svg+xml' });
+            const objectUrl = URL.createObjectURL(blob);
+            imageEl.setAttribute('src', objectUrl);
+            imageEl.dataset.previewSrc = objectUrl;
+            imageEl.dataset.svgNormalized = 'true';
+        } catch (_) {
+            imageEl.dataset.svgNormalized = 'false';
+        } finally {
+            imageEl.dataset.svgNormalizing = 'false';
+        }
+    };
+
+    const normalizeSvgDiagrams = (container) => {
+        const svgImages = container.querySelectorAll('.work-section-diagram');
+        svgImages.forEach((img) => {
+            normalizeSvgImage(img);
+        });
+    };
+
+    const ensureImagePreviewOverlay = () => {
+        let overlay = document.querySelector('.image-preview-overlay');
+        if (overlay) return overlay;
+
+        overlay = document.createElement('div');
+        overlay.className = 'image-preview-overlay';
+        overlay.setAttribute('aria-hidden', 'true');
+        overlay.innerHTML = `
+            <button class="image-preview-close" type="button" aria-label="Close preview">×</button>
+            <div class="image-preview-viewport">
+                <img class="image-preview-content" alt="Expanded project diagram preview"/>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const closeOverlay = () => {
+            overlay.classList.remove('is-open');
+            overlay.setAttribute('aria-hidden', 'true');
+        };
+
+        overlay.addEventListener('click', (event) => {
+            if (event.target === overlay || event.target.classList.contains('image-preview-close')) {
+                closeOverlay();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
+                closeOverlay();
+            }
+        });
+
+        return overlay;
+    };
+
+    const ensureVideoPreviewOverlay = () => {
+        let overlay = document.querySelector('.video-preview-overlay');
+        if (overlay) return overlay;
+
+        overlay = document.createElement('div');
+        overlay.className = 'video-preview-overlay';
+        overlay.setAttribute('aria-hidden', 'true');
+        overlay.innerHTML = `
+            <button class="video-preview-close" type="button" aria-label="Close video preview">×</button>
+            <div class="video-preview-viewport">
+                <video class="video-preview-content" controls playsinline preload="metadata">
+                    <source src="" type="video/mp4"/>
+                </video>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const modalVideo = overlay.querySelector('.video-preview-content');
+        const modalSource = modalVideo ? modalVideo.querySelector('source') : null;
+        const closeOverlay = () => {
+            overlay.classList.remove('is-open');
+            overlay.setAttribute('aria-hidden', 'true');
+            if (modalVideo) {
+                modalVideo.pause();
+                modalVideo.currentTime = 0;
+            }
+            if (modalSource) {
+                modalSource.setAttribute('src', '');
+                if (modalVideo) modalVideo.load();
+            }
+        };
+
+        overlay.addEventListener('click', (event) => {
+            if (event.target === overlay || event.target.classList.contains('video-preview-close')) {
+                closeOverlay();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
+                closeOverlay();
+            }
+        });
+
+        return overlay;
+    };
+
+    const bindImagePreview = (container) => {
+        const overlay = ensureImagePreviewOverlay();
+        const previewImg = overlay.querySelector('.image-preview-content');
+        const previewableImages = container.querySelectorAll('.work-previewable');
+
+        previewableImages.forEach((imageEl) => {
+            imageEl.addEventListener('click', async (event) => {
+                event.stopPropagation();
+                await normalizeSvgImage(imageEl);
+                const src = imageEl.dataset.previewSrc || imageEl.getAttribute('src');
+                const alt = imageEl.getAttribute('alt') || 'Project diagram preview';
+                if (!src || !previewImg) return;
+                previewImg.setAttribute('src', src);
+                previewImg.setAttribute('alt', alt);
+                overlay.classList.add('is-open');
+                overlay.setAttribute('aria-hidden', 'false');
+            });
+        });
+    };
+
+    const bindVideoPreview = (container) => {
+        const overlay = ensureVideoPreviewOverlay();
+        const modalVideo = overlay.querySelector('.video-preview-content');
+        const modalSource = modalVideo ? modalVideo.querySelector('source') : null;
+        const previewButtons = container.querySelectorAll('.work-media-preview-btn');
+
+        previewButtons.forEach((buttonEl) => {
+            buttonEl.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const previewVideo = buttonEl.querySelector('.work-media-preview-video');
+                const sourceEl = previewVideo ? previewVideo.querySelector('source') : null;
+                const src = sourceEl ? sourceEl.getAttribute('src') : '';
+                if (!src || !modalVideo || !modalSource) return;
+                modalSource.setAttribute('src', src);
+                modalVideo.load();
+                modalVideo.currentTime = 0;
+                overlay.classList.add('is-open');
+                overlay.setAttribute('aria-hidden', 'false');
+            });
+        });
+    };
+
+    fetch(source, { cache: 'no-store' })
         .then((response) => response.json())
         .then((projects) => {
             if (!Array.isArray(projects)) return;
+            const visibleProjects = projects.filter(Boolean);
+            if (!visibleProjects.length) return;
 
-            const featured = projects.filter((project) => project.featured);
-            const work = projects.filter((project) => !project.featured);
+            const projectOrder = ['javainsight', 'job-application-tracker'];
+            visibleProjects.sort((a, b) => {
+                const ai = projectOrder.indexOf(String(a && a.id || '').toLowerCase());
+                const bi = projectOrder.indexOf(String(b && b.id || '').toLowerCase());
+                const av = ai === -1 ? Number.MAX_SAFE_INTEGER : ai;
+                const bv = bi === -1 ? Number.MAX_SAFE_INTEGER : bi;
+                return av - bv;
+            });
 
-            if (featuredContainer && featured.length) {
-                featuredContainer.innerHTML = featured.map((project) => {
-                    const tags = buildTagList(project.tags || project.stack);
-                    const links = buildGithubLink(project.links, `${project.title} GitHub`);
-                    const href = project.links && project.links.github || '#';
-                    return `
-                        <article class="project-card">
-                            <a class="card-link" href="${escapeHtml(href)}" aria-label="${escapeHtml(project.title)} project page"></a>
-                            <a class="project-media project-link" href="${escapeHtml(href)}" aria-label="${escapeHtml(project.title)} preview"></a>
-                            <div class="project-body">
-                                <h3><a class="project-title-link" href="${escapeHtml(href)}">${escapeHtml(project.title)}</a></h3>
-                                <p>${escapeHtml(project.tagline)}</p>
-                                <div class="project-tags">${tags}</div>
-                                <div class="project-links">${links}</div>
+            const count = visibleProjects.length;
+            workContainer.style.setProperty('--project-columns', String(Math.min(3, count)));
+            workContainer.style.setProperty('--project-columns-md', String(Math.min(2, count)));
+
+            workContainer.innerHTML = visibleProjects.map((project) => {
+                const tags = buildTagList(project.stack || project.tags, 'work-tag');
+                const links = buildGithubLink(project.links, `${project.title} GitHub`);
+                const summary = project.summaryLine || project.tagline || '';
+                const rawDetailKey = String(project.id || project.title || 'project');
+                const detailId = `work-details-${rawDetailKey.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
+                const detailsHtml = buildDetails(project, detailId);
+                return `
+                    <article class="work-card" tabindex="0" role="button" aria-expanded="false" aria-controls="${escapeHtml(detailId)}">
+                        <div class="work-header">
+                            <h3 class="work-title">${escapeHtml(project.title)}</h3>
+                            <div class="work-top-row">
+                                <div class="work-top-media">
+                                    ${buildCardMediaPreview(project)}
+                                </div>
+                                <div class="work-top-meta">
+                                    <p class="work-desc">${escapeHtml(summary)}</p>
+                                    <div class="work-tags">${tags}</div>
+                                    <div class="work-actions">${links}</div>
+                                </div>
                             </div>
-                        </article>
-                    `;
-                }).join('');
-            }
+                        </div>
+                        ${detailsHtml}
+                    </article>
+                `;
+            }).join('');
 
-            if (workContainer && work.length) {
-                workContainer.innerHTML = work.map((project) => {
-                    const tags = buildTagList(project.stack || project.tags, 'work-tag');
-                    const links = buildGithubLink(project.links, `${project.title} GitHub`);
-                    const href = project.links && project.links.github || '#';
-                    return `
-                        <article class="work-card">
-                            <a class="card-link" href="${escapeHtml(href)}" aria-label="${escapeHtml(project.title)} project page"></a>
-                            <a class="work-media project-link" href="${escapeHtml(href)}" aria-label="${escapeHtml(project.title)} details"></a>
-                            <div class="work-header">
-                                <h3 class="work-title"><a class="project-title-link" href="${escapeHtml(href)}">${escapeHtml(project.title)}</a></h3>
-                                <p class="work-desc">${escapeHtml(project.tagline)}</p>
-                            </div>
-                            <div class="work-tags">${tags}</div>
-                            <div class="work-actions">${links}</div>
-                        </article>
-                    `;
-                }).join('');
-            }
+            const cards = Array.from(workContainer.querySelectorAll('.work-card'));
+            const closeCard = (card) => {
+                card.classList.remove('is-expanded');
+                card.setAttribute('aria-expanded', 'false');
+                const detailId = card.getAttribute('aria-controls');
+                if (!detailId) return;
+                const detailEl = document.getElementById(detailId);
+                if (detailEl) detailEl.hidden = true;
+            };
+            const openCard = (card) => {
+                cards.forEach((other) => {
+                    if (other !== card) closeCard(other);
+                });
+                card.classList.add('is-expanded');
+                card.setAttribute('aria-expanded', 'true');
+                const detailId = card.getAttribute('aria-controls');
+                if (!detailId) return;
+                const detailEl = document.getElementById(detailId);
+                if (detailEl) detailEl.hidden = false;
+            };
+            const toggleCard = (card) => {
+                if (card.classList.contains('is-expanded')) {
+                    closeCard(card);
+                } else {
+                    openCard(card);
+                }
+            };
+
+            cards.forEach((card) => {
+                card.addEventListener('click', (event) => {
+                    const externalLink = event.target.closest('.project-external-link');
+                    if (externalLink) return;
+                    toggleCard(card);
+                });
+                card.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        toggleCard(card);
+                    }
+                });
+            });
+            normalizeSvgDiagrams(workContainer);
+            bindImagePreview(workContainer);
+            bindVideoPreview(workContainer);
         })
         .catch(() => {
-            // Keep existing static content if data fails to load
+            workContainer.innerHTML = '<p class="work-desc">Projects are temporarily unavailable. Please refresh the page.</p>';
         });
 });
 
@@ -318,4 +779,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-

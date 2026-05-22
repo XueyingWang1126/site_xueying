@@ -22,6 +22,30 @@
     z-index: 0;
     pointer-events: none;
 }
+/* Pink cursor-follow glow layer (driven by --cursor-x / --cursor-y in main.js). */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    background: radial-gradient(
+        circle,
+        var(--cursor-glow) 0%,
+        color-mix(in srgb, var(--accent), transparent 78%) 40%,
+        transparent 75%
+    );
+    transform: translate3d(calc(var(--cursor-x, -300px) - 50%), calc(var(--cursor-y, -300px) - 50%), 0);
+    transition: opacity 0.2s ease;
+}
+body.cursor-glow::after {
+    opacity: 1;
+}
 body.light .splash-overlay {
     background: #17121a;
 }
@@ -95,6 +119,14 @@ body.light .splash-overlay {
     .typing {
         animation: none;
         width: auto;
+    }
+    body::after {
+        display: none;
+    }
+}
+@media (hover: none), (pointer: coarse) {
+    body::after {
+        display: none;
     }
 }
 @keyframes typing {

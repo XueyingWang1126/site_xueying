@@ -2,95 +2,106 @@
   {
     "id": "javainsight",
     "title": "JavaInsight",
-    "tagline": "Developer tool that turns Java codebases into actionable insights.",
-    "stack": ["Java", "Spring Boot", "MySQL", "REST APIs"],
-    "tags": ["Code Analysis", "Backend", "API"],
-    "role": "Backend Developer",
-    "highlights": [
-      "Built parsing workflows to surface dependencies and hotspots",
-      "Designed API endpoints for analytics retrieval"
-    ],
+    "summaryLine": "A local JavaFX desktop tool that scans Java projects for similar methods, sensitive keywords, and unused variables, then turns the findings into an explainable quality report.",
+    "stack": ["Java", "Maven", "Static Analysis", "Code Quality", "JUnit Testing", "Test Case Design"],
     "links": {
-      "github": "#"
+      "github": "https://github.com/XueyingWang1126/JavaInsight"
     },
-    "metrics": {
-      "focus": "Maintainability"
+    "media": {
+      "demoVideo": "/videos/JavaInsight/JavaInsight_demoVideo.mp4"
+    },
+    "details": {
+      "sections": [
+        {
+          "title": "Why I Built It",
+          "text": "I built JavaInsight after noticing a problem that often appears in student team projects. When several beginner developers work on the same Java project, similar helper methods can be written in different classes before the team has discussed a shared structure. The project may still run, but the code becomes harder to maintain, debug, and refactor later. JavaInsight was my way of exploring how a small desktop tool could make this kind of hidden redundancy easier to spot. Instead of only comparing method names, it looks at method behaviour and shows possible similarities in a way that is easier to review. I also added sensitive keyword and unused variable checks as practical reminders for students and junior developers to keep basic code hygiene in mind."
+        },
+        {
+          "title": "Workflow",
+          "diagramPath": "/images/JavaInsight/userFlow.svg",
+          "diagramClass": "diagram-workflow",
+          "diagramAlt": "JavaInsight Workflow diagram",
+          "list": [
+            "Launch the JavaInsight desktop application",
+            "Choose a Java source folder",
+            "Scan the folder and its subfolders for Java files",
+            "Run the three static analysis checks",
+            "Review similar methods, sensitive keywords, and unused variables",
+            "View the score, grade, and charts",
+            "Preview or export the PDF report"
+          ]
+        },
+        {
+          "title": "Key Features",
+          "list": [
+            "Folder scanning for Java source files",
+            "Similar method detection based on AST-derived behavioural signals",
+            "Sensitive keyword checks in variable names and string literals",
+            "Custom keyword list for project-specific checks",
+            "Unused variable detection for fields, parameters, and local variables",
+            "Score and grade summary based on issue density and penalties",
+            "JavaFX result panels with charts and grouped findings",
+            "PDF report preview and export"
+          ]
+        },
+        {
+          "title": "Architecture Design",
+          "diagramPath": "/images/JavaInsight/arcitectureDiagram.svg",
+          "diagramClass": "diagram-architecture",
+          "diagramAlt": "JavaInsight Architecture diagram",
+          "text": "For the system structure, JavaInsight is organised around three main parts. The JavaFX interface is responsible for user interaction, including folder selection, scan actions, result panels, score charts, and report preview. Behind the interface, the analysis modules handle the actual code inspection. They scan Java files, parse code structure, and run separate checks for similar methods, sensitive keywords, and unused variables. The findings are then passed into the report side of the tool, where they are grouped into a quality report and used by both the on-screen result panels and the PDF export."
+        }
+      ]
     },
     "featured": true
   },
   {
-    "id": "service-dashboard",
-    "title": "Service Ops Dashboard",
-    "tagline": "Monitoring view that highlights key service health signals.",
-    "stack": ["React", "Node.js", "Postman"],
-    "tags": ["Frontend", "Observability"],
-    "role": "Full Stack Contributor",
-    "highlights": [
-      "Designed layout for fast status scanning",
-      "Connected API summaries into a single view"
-    ],
+    "id": "job-application-tracker",
+    "title": "Job Application Tracker",
+    "summaryLine": "A local Spring Boot web app for organising job applications, statuses, notes, and role-specific attachments in one place.",
+    "stack": ["Java", "Spring Boot", "PostgreSQL", "Docker", "SQL", "Web Application"],
     "links": {
-      "github": "#"
+      "github": "https://github.com/XueyingWang1126/JobApplicationTracker"
     },
-    "metrics": {
-      "focus": "Clarity"
+    "media": {
+      "demoVideo": "/videos/JobApplicationTracker/JobApplicationTracker_demoVideo.mp4"
     },
-    "featured": true
-  },
-  {
-    "id": "client-platform",
-    "title": "Client Service Platform (Backend)",
-    "tagline": "Reusable API modules and secure login flows for a support platform.",
-    "stack": ["Java", "Redis", "MySQL", "Postman"],
-    "tags": ["Backend", "Security", "APIs"],
-    "role": "Backend Intern",
-    "highlights": [
-      "Implemented authentication workflows",
-      "Optimized data access for core services"
-    ],
-    "links": {
-      "github": "#"
-    },
-    "metrics": {
-      "focus": "Reliability"
-    },
-    "featured": false
-  },
-  {
-    "id": "ai-marketplace-cart",
-    "title": "AI Model Marketplace Cart",
-    "tagline": "Data model and backend logic for multiple product types.",
-    "stack": ["MySQL", "Backend Logic", "API Testing", "Collaboration"],
-    "tags": ["Data Modeling", "Backend"],
-    "role": "Backend Contributor",
-    "highlights": [
-      "Defined cart schema for different product types",
-      "Validated workflows with API tests"
-    ],
-    "links": {
-      "github": "#"
-    },
-    "metrics": {
-      "focus": "Scalability"
-    },
-    "featured": false
-  },
-  {
-    "id": "qa-automation-kit",
-    "title": "QA Automation Toolkit",
-    "tagline": "Reusable scripts for API verification and regression checks.",
-    "stack": ["Java", "JUnit", "Postman"],
-    "tags": ["Testing", "Automation"],
-    "role": "QA Contributor",
-    "highlights": [
-      "Standardized API test flows",
-      "Improved coverage with reusable helpers"
-    ],
-    "links": {
-      "github": "#"
-    },
-    "metrics": {
-      "focus": "Reliability"
+    "details": {
+      "whyBuilt": "I built this project from a real problem in my own job search. As applications, statuses, notes, CVs, and cover letters started to spread across different places, I wanted one simple system to keep the full application workflow organised.",
+      "coreWorkflow": [
+        "Register an account",
+        "Log in",
+        "View dashboard",
+        "Add an application",
+        "Upload role-specific documents",
+        "Review attachments"
+      ],
+      "keyFeatures": [
+        "Account registration and login",
+        "Dashboard summary by region and application status",
+        "Application records with search and filtering",
+        "Region and country grouping for different job markets",
+        "Per-user data isolation for applications and documents",
+        "Attachment upload, download, and delete",
+        "Optional company auto-fill using Wikipedia and Wikidata",
+        "Local Docker setup for PostgreSQL and MinIO"
+      ],
+      "architecture": "For the application structure, I kept the project split into three main layers. Controllers handle actions from the Thymeleaf pages, services keep the main application rules, and mappers connect the app with the database. I used this structure because it was close to the Java backend style I had seen during internship work. Keeping the controller, service, and mapper responsibilities separate made the project easier for me to organise, test, and maintain as it grew.",
+      "database": "For this project, I used two types of storage. PostgreSQL stores the structured data, such as users, job application records, statuses, regions, and notes. MinIO is used to store uploaded files, such as CVs and cover letters. For the database tables, I separated the data into three main parts. APP_USERS stores the account information, APPLICATIONS stores the job application records, and DOCUMENTS stores the uploaded document records. I designed it this way because these three parts match the real way I expected the tool to be used, where one user can have many applications, and each application can have related documents. This lets the app connect each uploaded file back to the right user and job application without mixing everything into one table.",
+      "diagrams": [
+        {
+          "label": "User Flow",
+          "path": "/images/JobApplicationTracker/user work flow diagram.svg"
+        },
+        {
+          "label": "Architecture",
+          "path": "/images/JobApplicationTracker/project architecture diagram.svg"
+        },
+        {
+          "label": "Database ER Diagram",
+          "path": "/images/JobApplicationTracker/database er diagram.svg"
+        }
+      ]
     },
     "featured": false
   }
