@@ -14,7 +14,9 @@
     }
     .nav-links {
         flex-wrap: wrap;
-        justify-content: flex-end;
+        justify-content: center;
+        gap: 0.85rem 1rem;
+        font-size: 0.95rem;
     }
     .work-grid {
         grid-template-columns: 1fr;
