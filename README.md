@@ -1,72 +1,67 @@
-# Xueying Wang Portfolio Website
+# Xueying Wang — Portfolio Website
 
-Personal portfolio website built with Spring Boot + Thymeleaf, with project cards populated from static JSON data.
+A fast, fully static personal portfolio website. No backend, no build step — just HTML, CSS, and vanilla JavaScript served directly from a CDN.
+
+> Previously built on Spring Boot + Thymeleaf, the site was refactored to a pure static architecture because it has no server-side logic (no database, API, or authentication). See `ARCHITECTURE.md` for the full engineering rationale.
 
 ## Tech Stack
 
-- Java 21
-- Spring Boot 2.7.10 (`spring-boot-starter-web`, `thymeleaf`, `actuator`)
-- Maven build system
-- Frontend: HTML, CSS, vanilla JavaScript
-
-## Local Development
-
-Prerequisites:
-
-- JDK 21
-- Maven 3.9+
-
-Install and run:
-
-```bash
-mvn -DskipTests clean package
-mvn -DskipTests spring-boot:run
-```
-
-App URL:
-
-- `http://localhost:8081/`
-
-Run packaged JAR:
-
-```bash
-java -jar target/Xueying_website-0.0.1-SNAPSHOT.jar
-```
+- HTML5
+- CSS3 (modular stylesheets under `css/`)
+- Vanilla JavaScript (`js/main.js`)
+- Project content driven by static JSON (`data/projects.json`)
 
 ## Project Structure
 
 ```text
-src/
-  main/
-    java/com/xueying/
-      PortfolioApplication.java
-      controller/HomeController.java
-    resources/
-      templates/index.html
-      static/
-        css/
-        js/main.js
-        data/projects.json
-        images/
-        files/resume.pdf
+.
+├── index.html          # Single-page portfolio
+├── css/                # Modular stylesheets (base, layout, hero, projects, ...)
+├── js/
+│   └── main.js         # Theme toggle, animations, project rendering, interactions
+├── images/             # Photos, logos, project diagrams
+├── videos/             # Project demo videos
+├── data/
+│   └── projects.json   # Project cards content (single source of truth)
+├── files/
+│   └── resume.pdf      # Downloadable resume
+├── ARCHITECTURE.md     # Engineering review & architecture decisions
+└── README.md
 ```
 
-## Updating Project Cards
+## Run Locally
 
-- Project card content is stored in `src/main/resources/static/data/projects.json`
-- Projects section mount point is in `src/main/resources/templates/index.html`
-- Renderer is in `src/main/resources/static/js/main.js`
-- Keep `index.html` free of hardcoded duplicate project card content
-- To update project title, summary, tags, details, diagrams, video path, or GitHub link, edit `projects.json`
-- If browser content looks stale during local development, use `Ctrl + F5` or DevTools Network with Disable cache
+The site is fully static, so any static file server works. Pick one:
 
-## Build & Deployment
+```bash
+# Option A: Python (built-in)
+python -m http.server 8000
 
-- Build artifact: `target/Xueying_website-0.0.1-SNAPSHOT.jar`
-- Deployment configuration in repo: TODO (no `Dockerfile`, `vercel.json`, `netlify.toml`, or CI workflow found)
-- Live site URL / hosting platform: TODO
+# Option B: Node (npx, no install)
+npx serve .
+```
+
+Then open `http://localhost:8000`.
+
+> Tip: opening `index.html` directly via `file://` mostly works, but the project cards load `data/projects.json` via `fetch`, which some browsers block on `file://`. Using a local server (above) avoids that.
+
+## Updating Content
+
+- **Project cards**: edit `data/projects.json` (title, summary, tech tags, details, diagrams, demo video, GitHub link). The renderer in `js/main.js` mounts them into the `#work-projects` container in `index.html`.
+- **Resume**: replace `files/resume.pdf`.
+- **About / Experience / Education**: edit the corresponding sections directly in `index.html`.
+- If content looks stale during local development, hard-refresh with `Ctrl + F5`.
+
+## Deployment
+
+The site is deployed as a static site (recommended: Vercel or Cloudflare Pages — both free, always-on, instant load, no cold start).
+
+Vercel:
+1. Push this repo to GitHub.
+2. Import the repo in Vercel.
+3. Framework Preset: **Other**; Build Command: empty; Output Directory: `.` (root).
+4. Deploy, then attach the custom domain `xueyingwang.co.uk` (update DNS at your registrar to point to Vercel).
 
 ## License
 
-No license file is currently present in this repository.  
-TODO: add an explicit license if you plan to open-source this project.
+No license file is currently present. Add an explicit license if you plan to open-source this project.
