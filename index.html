@@ -1,15 +1,15 @@
-﻿<!--
+<!--
   Purpose: Main portfolio page layout and sections.
   Module responsibilities: Navigation, section structure, and content.
 -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title th:text="${name} ?: 'Xueying Wang'">Xueying Wang</title>
-    <link rel="stylesheet" th:href="@{/css/style.css?v=202603031000}" href="/css/style.css?v=202603031000"/>
-    <script th:src="@{/js/main.js?v=202603031000}" src="/js/main.js?v=202603031000" defer></script>
+    <title>Xueying Wang</title>
+    <link rel="stylesheet" href="/css/style.css?v=202603031000"/>
+    <script src="/js/main.js?v=202603031000" defer></script>
 </head>
 <body>
 <!-- Splash Overlay -->
@@ -21,7 +21,6 @@
         </div>
         <div class="splash-character">
             <img class="intro-avatar splash-avatar-img"
-                 th:src="@{/images/intro-avatar.png}"
                  src="/images/intro-avatar.png"
                  alt="Intro character"
                  loading="eager"/>
@@ -49,7 +48,7 @@
 <!-- Hero -->
 <section id="hero" class="hero container">
     <div class="hero__text">
-        <p class="hero__kicker">Hi there, I'm <span th:text="${name} ?: 'Xueying Wang'">Xueying Wang</span>.</p>
+        <p class="hero__kicker">Hi there, I'm <span>Xueying Wang</span>.</p>
         <h1 class="hero__headline">I build software and enjoy learning along the way.</h1>
 
         <div class="hero__actions">
@@ -96,13 +95,13 @@
 
         </div>
 
-        <p class="hero__subtitle" th:text="${title}">MSc Software Development graduate.</p>
-        <p class="hero__intro" th:text="${summary}">
+        <p class="hero__subtitle">MSc Software Development graduate.</p>
+        <p class="hero__intro">
             Focused on Java and Spring full-stack tools, including projects like JavaInsight.
         </p>
     </div>
     <div class="hero__photo">
-        <img th:src="@{/images/avatar.jpg}"
+        <img
              src="/images/avatar.jpg"
              alt="Photo of Xueying Wang"/>
     </div>
@@ -159,7 +158,6 @@
         <div class="card__header">
             <div class="company-wrapper">
                 <img
-                        th:src="@{/images/china_telecom.jpg}"
                         src="/images/china_telecom.jpg"
                         alt="China Telecom Logo"
                         class="company-icon"
@@ -188,7 +186,6 @@
         <div class="card__header">
             <div class="company-wrapper">
                 <img
-                        th:src="@{/images/Sainsbury's logo.jpg}"
                         src="/images/Sainsbury's logo.jpg"
                         alt="Sainsbury's Logo"
                         class="company-icon"
@@ -197,7 +194,7 @@
             </div>
             <div class="card__period">Oct 2025 - Present</div>
         </div>
-        <div class="card__role">Training Assistant</div>
+        <div class="card__role">Trading Assistant</div>
         <ul class="card__bullets">
             <li>Handled fast-paced customer tasks while judging priorities quickly.</li>
             <li>Communicated clearly with customers and colleagues to resolve daily issues.</li>
@@ -220,7 +217,6 @@
             <div class="card__header">
                 <div class="company-wrapper">
                     <img
-                            th:src="@{/images/uog_logo.png}"
                             src="/images/uog_logo.png"
                             alt="University of Glasgow Logo"
                             class="company-icon"
@@ -230,7 +226,7 @@
                         <div class="education-info">MSc Software Development</div>
                     </div>
                 </div>
-                <div class="card__period">2024 - 2025</div>
+                <div class="card__period">Sep 2024 - Dec 2025</div>
             </div>
         </div>
     </a>
@@ -245,7 +241,6 @@
             <div class="card__header">
                 <div class="company-wrapper">
                     <img
-                            th:src="@{/images/hainan.png}"
                             src="/images/hainan.png"
                             alt="Hainan University Logo"
                             class="company-icon"
